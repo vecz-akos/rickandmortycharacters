@@ -6,6 +6,7 @@ export default async function getCharacters() {
     query {
         characters(page: 1) {
         results {
+                id
                 image
                 name
                 species
