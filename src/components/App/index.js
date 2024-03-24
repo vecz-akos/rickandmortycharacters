@@ -1,35 +1,25 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 
-import getCharacters from '../../graphql/getCharacters';
 import CharacterDetails from '../CharacterDetails';
 
 import CustomNavBar from '../CustomNavBar';
 import CharacterTable from '../CharacterTable';
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
-  const [ characters, setCharacters ] = useState([]);
   const [ viewChar, setViewChar ] = useState(-1);
   const [ isViewChar, setIsViewChar ] = useState(false);
-
-  useEffect(() => {
-    const loadChars = async () => {
-      setLoading(true);
-
-      const data = await getCharacters();
-      setCharacters(data?.characters?.results);
-
-      setLoading(false);
-    };
-
-    loadChars();
-  }, []);
+  const [ currentPage, setCurrentPage ] = useState(1);
+  const lastPage = 42; // believe me
 
   const handleViewChar = async (id) => {
     setViewChar(id);
     setIsViewChar(!isViewChar);
+  }
+
+  const handleNextPage = (d) => {
+    setCurrentPage(currentPage + d);
   }
 
   return <div className="App">
@@ -39,8 +29,12 @@ const App = () => {
         <Col md={8}>
         {
           !isViewChar ?
-          (loading ? <p>Loading...</p>
-          : <CharacterTable characters={characters} handleViewChar={handleViewChar} />)
+            <>
+              <CharacterTable handleViewChar={handleViewChar} currentPage={currentPage} />
+              {currentPage > 1 && <button type='button' className='btn btn-primary' onClick={() => handleNextPage(-1)}>Previous</button>}
+              <p>Current page: {currentPage}</p>
+              {currentPage < lastPage && <button type='button' className='btn btn-primary' onClick={() => handleNextPage(+1)}>Next</button>}
+            </>
           : <>
               <button type='button' className='btn btn-primary' onClick={() => handleViewChar(null)}>Back to all characters</button>
               <CharacterDetails characterId={viewChar}></CharacterDetails>

@@ -1,8 +1,29 @@
+import { useEffect, useState } from "react";
+
 import { Image, Table } from "react-bootstrap"
 
-export default function CharacterTable({characters, handleViewChar}) {
+import getCharacters from "../graphql/getCharacters";
+
+export default function CharacterTable({ currentPage, handleViewChar }) {
+  const [ characters, setCharacters ] = useState([]);
+  const [ loading, setLoading ] = useState(false);
+
+  useEffect(() => {
+    const loadChars = async () => {
+      setLoading(true);
+
+      const data = await getCharacters(currentPage);
+      setCharacters(data?.characters?.results);
+
+      setLoading(false);
+    };
+
+    loadChars();
+  }, [currentPage]);
+
   return <>
     <h1>Home</h1>
+    {loading ? "Loading..." :
     <Table hover>
         <thead>
         <tr>
@@ -22,6 +43,6 @@ export default function CharacterTable({characters, handleViewChar}) {
             </tr>
         )}
         </tbody>
-    </Table>
+    </Table>}
   </>
 }
