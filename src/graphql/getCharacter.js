@@ -9,7 +9,15 @@ export default async function getCharacter({ characterId }) {
             name
             species
             status
-                type
+            gender
+            location {
+                name
+                dimension
+            }
+            origin {
+                name
+                dimension
+            }
         }
     }
     `)

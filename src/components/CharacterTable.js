@@ -1,8 +1,9 @@
 import { Image, Table } from "react-bootstrap"
 
 export default function CharacterTable({characters, handleViewChar}) {
-  return (
-    <Table>
+  return <>
+    <h1>Home</h1>
+    <Table hover>
         <thead>
         <tr>
             <th>Avatar</th>
@@ -22,5 +23,5 @@ export default function CharacterTable({characters, handleViewChar}) {
         )}
         </tbody>
     </Table>
-  )
+  </>
 }
