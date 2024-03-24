@@ -6,7 +6,7 @@ import { Badge, Image } from "react-bootstrap";
 
 export default function CharacterDetails(characterId) {
   const [ character, setCharacter ] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
   useEffect(() => {
     const loadChar = async () => {
@@ -19,7 +19,7 @@ export default function CharacterDetails(characterId) {
     };
 
     loadChar();
-  }, []);
+  }, [characterId]);
 
   return (loading ? <p>Loading...</p> :
           <>

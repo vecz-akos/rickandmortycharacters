@@ -1,6 +1,6 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 import CharacterDetails from '../CharacterDetails';
 
@@ -10,16 +10,10 @@ import CharacterTable from '../CharacterTable';
 const App = () => {
   const [ viewChar, setViewChar ] = useState(-1);
   const [ isViewChar, setIsViewChar ] = useState(false);
-  const [ currentPage, setCurrentPage ] = useState(1);
-  const lastPage = 42; // believe me
 
   const handleViewChar = async (id) => {
     setViewChar(id);
     setIsViewChar(!isViewChar);
-  }
-
-  const handleNextPage = (d) => {
-    setCurrentPage(currentPage + d);
   }
 
   return <div className="App">
@@ -30,10 +24,7 @@ const App = () => {
         {
           !isViewChar ?
             <>
-              <CharacterTable handleViewChar={handleViewChar} currentPage={currentPage} />
-              {currentPage > 1 && <button type='button' className='btn btn-primary' onClick={() => handleNextPage(-1)}>Previous</button>}
-              <p>Current page: {currentPage}</p>
-              {currentPage < lastPage && <button type='button' className='btn btn-primary' onClick={() => handleNextPage(+1)}>Next</button>}
+              <CharacterTable handleViewChar={handleViewChar} />
             </>
           : <>
               <button type='button' className='btn btn-primary' onClick={() => handleViewChar(null)}>Back to all characters</button>

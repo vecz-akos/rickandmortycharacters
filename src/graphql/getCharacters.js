@@ -4,7 +4,7 @@ import { gql } from 'graphql-request';
 export default async function getCharacters(page=1, search="") {
     const data = await gqlClient.request(gql`
     query {
-        characters(${search === "" ? `page: ${page}` : `filter: { name: "${search}" }`}) {
+        characters(${search === "" ? `page: ${page}` : `page: ${page}, filter: { name: "${search}" }`}) {
         results {
                 id
                 image
