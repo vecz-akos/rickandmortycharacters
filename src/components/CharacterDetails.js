@@ -4,7 +4,7 @@ import getCharacter from "../graphql/getCharacter";
 
 import { Badge, Image } from "react-bootstrap";
 
-export default function CharacterDetails(characterId) {
+export default function CharacterDetails({ characterId }) {
   const [ character, setCharacter ] = useState({});
   const [ loading, setLoading ] = useState(false);
 
